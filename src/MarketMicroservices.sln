@@ -1,8 +1,41 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{E6A75175-5794-4287-A726-A940FAAC0742}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{40B3C449-9D9D-41D1-AE2D-884AAB160A96}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E05F817D-3794-49DB-A1A5-AAFDBAA677C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket", "Basket", "{1D18C06C-F8E2-4925-94A4-51DCC8A7B16D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket.API", "Services\Basket\Basket.API\Basket.API.csproj", "{D3BA33AD-BF3E-4364-87D4-5BF8370C731D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.API", "Services\Catalog\CatalogService.API\CatalogService.API.csproj", "{5C2D2B00-88F6-457B-8B93-52589324B000}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{40B3C449-9D9D-41D1-AE2D-884AAB160A96} = {E6A75175-5794-4287-A726-A940FAAC0742}
+		{1D18C06C-F8E2-4925-94A4-51DCC8A7B16D} = {E6A75175-5794-4287-A726-A940FAAC0742}
+		{D3BA33AD-BF3E-4364-87D4-5BF8370C731D} = {1D18C06C-F8E2-4925-94A4-51DCC8A7B16D}
+		{5C2D2B00-88F6-457B-8B93-52589324B000} = {40B3C449-9D9D-41D1-AE2D-884AAB160A96}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E05F817D-3794-49DB-A1A5-AAFDBAA677C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E05F817D-3794-49DB-A1A5-AAFDBAA677C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E05F817D-3794-49DB-A1A5-AAFDBAA677C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E05F817D-3794-49DB-A1A5-AAFDBAA677C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3BA33AD-BF3E-4364-87D4-5BF8370C731D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3BA33AD-BF3E-4364-87D4-5BF8370C731D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3BA33AD-BF3E-4364-87D4-5BF8370C731D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3BA33AD-BF3E-4364-87D4-5BF8370C731D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C2D2B00-88F6-457B-8B93-52589324B000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C2D2B00-88F6-457B-8B93-52589324B000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C2D2B00-88F6-457B-8B93-52589324B000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C2D2B00-88F6-457B-8B93-52589324B000}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
