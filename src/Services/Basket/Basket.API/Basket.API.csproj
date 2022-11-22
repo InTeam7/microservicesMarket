@@ -7,6 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+        <PackageReference Include="MassTransit" Version="7.1.5" />
+        <PackageReference Include="MassTransit.AspNetCore" Version="7.1.5" />
+        <PackageReference Include="MassTransit.RabbitMQ" Version="7.1.5" />
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="5.0.1" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
@@ -26,5 +30,8 @@
         <OutputDir>obj/Debug/net5.0/</OutputDir>
         <Generator>MSBuild:Compile</Generator>
       </Protobuf>
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\BuildingBlocks\EventBus.Messages\EventBus.Messages.csproj" />
     </ItemGroup>
 </Project>
