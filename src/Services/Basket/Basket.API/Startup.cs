@@ -2,11 +2,14 @@ using System;
 using Basket.API.GrpcService;
 using Basket.API.Repositories;
 using Discount.Grpc.Protos;
+using HealthChecks.UI.Client;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
@@ -40,12 +43,18 @@ namespace Basket.API
                 config.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(Configuration["EventBusSettings:HostAddress"]);
+                    cfg.UseHealthCheck(ctx);
                 });
             });
 
             services.AddMassTransitHostedService();
 
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddHealthChecks()
+                .AddRedis(Configuration["CacheSettings:ConnectionString"],
+                    "Redis Health",
+                    HealthStatus.Degraded);
             
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -64,13 +73,22 @@ namespace Basket.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Basket.API v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
             //app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(
+                endpoints =>
+                {
+                    endpoints.MapControllers();
+                    endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+                    {
+                        Predicate = _ => true,
+                        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                    });
+                });
         }
     }
 }

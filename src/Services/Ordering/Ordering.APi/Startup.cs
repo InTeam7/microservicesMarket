@@ -1,6 +1,8 @@
 using EventBus.Messages.Common;
+using HealthChecks.UI.Client;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using Ordering.APi.EventBusConsumer;
 using Ordering.Application;
 using Ordering.Infrastructure;
+using Ordering.Infrastructure.Persistence;
 
 namespace Ordering.APi
 {
@@ -37,6 +40,7 @@ namespace Ordering.APi
                     {
                         c.ConfigureConsumer<BasketCheckoutConsumer>(ctx);
                     });
+                    cfg.UseHealthCheck(ctx);
                 });
             });
             
@@ -44,6 +48,10 @@ namespace Ordering.APi
 
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<BasketCheckoutConsumer>();
+
+            services.AddHealthChecks()
+                .AddDbContextCheck<OrderContext>();
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -66,7 +74,16 @@ namespace Ordering.APi
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(
+                endpoints =>
+                {
+                    endpoints.MapControllers();
+                    endpoints.MapHealthChecks("/hc",new HealthCheckOptions()
+                    {
+                        Predicate = _=>true,
+                        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                    });
+                });
         }
     }
 }
